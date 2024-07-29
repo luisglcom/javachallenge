@@ -1,0 +1,102 @@
+openapi: "3.0.0"
+info:
+  title: User API
+  version: 1.0.0
+paths:
+  /users:
+    post:
+      summary: Create a new user
+      operationId: createUser
+      requestBody:
+        description: User creation request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRequest'
+        required: true
+      responses:
+        201:
+          description: User created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      x-codegen-request-body-name: body
+components:
+  schemas:
+    UserRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: User name
+        email:
+          type: string
+          format: email
+          description: User email
+        password:
+          type: string
+          format: password
+          description: User password
+        phones:
+          type: array
+          items:
+            $ref: "#/components/schemas/Phone"
+          description: List of user phone numbers
+    UserResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: User ID
+        created:
+          type: string
+          format: date-time
+          description: User creation date
+        modified:
+          type: string
+          format: date-time
+          description: User last modification date
+        last_login:
+          type: string
+          format: date-time
+          description: User last login date
+        token:
+          type: string
+          description: Authentication token
+        isactive:
+          type: boolean
+          description: User account status
+    Phone:
+      type: object
+      properties:
+        number:
+          description: Phone number
+          type: string
+        citycode:
+          description: Country code
+          type: integer
+          format: int32
+        countrycode:
+          description: City code
+          type: integer
+          format: int32
+    ErrorResponse:
+      type: object
+      properties:
+        mensaje:
+          description: Error description
+          type: string
+
