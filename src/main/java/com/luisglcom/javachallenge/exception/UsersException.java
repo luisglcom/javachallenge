@@ -3,6 +3,8 @@ package com.luisglcom.javachallenge.exception;
 import lombok.Data;
 import org.springframework.http.HttpStatus;
 
+import java.time.LocalDateTime;
+
 /**
  * The type Gateway exception.
  */
@@ -13,12 +15,13 @@ public abstract class UsersException extends RuntimeException {
   /**
    * The Error code.
    */
-  protected String errorCode;
+  protected Integer errorCode;
 
   private HttpStatus httpStatus;
 
-  private Object[] parameters;
+  private LocalDateTime timestamp;
 
+  private Object[] parameters;
 
   /**
    * Instantiates a new Users exception.
@@ -32,10 +35,12 @@ public abstract class UsersException extends RuntimeException {
    *
    * @param message   the message
    * @param errorCode the error code
+   * @param timestamp the timestamp
    */
-  public UsersException(String message, String errorCode) {
+  public UsersException(String message, Integer errorCode, LocalDateTime timestamp) {
     super(message);
     this.errorCode = errorCode;
+    this.timestamp = timestamp;
   }
 
   /**

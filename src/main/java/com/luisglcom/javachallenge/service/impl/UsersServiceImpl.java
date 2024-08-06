@@ -1,7 +1,8 @@
 package com.luisglcom.javachallenge.service.impl;
 
-import com.luisglcom.javachallenge.dto.UserRequestDto;
-import com.luisglcom.javachallenge.dto.UserResponseDto;
+import com.luisglcom.javachallenge.dto.CreateRequestDto;
+import com.luisglcom.javachallenge.dto.CreateResponseDto;
+import com.luisglcom.javachallenge.enums.ErrorCode;
 import com.luisglcom.javachallenge.exception.UsersModelException;
 import com.luisglcom.javachallenge.model.UsersEntity;
 import com.luisglcom.javachallenge.model.converter.UsersEntityConverter;
@@ -11,6 +12,7 @@ import lombok.AllArgsConstructor;
 import org.apache.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 /**
@@ -22,11 +24,12 @@ public class UsersServiceImpl implements UsersService {
 
     private final UsersRepository usersRepository;
     @Override
-    public UserResponseDto createUser(UserRequestDto userRequest) {
-        var userResponseDto = new UserResponseDto();
+    public CreateResponseDto createUser(CreateRequestDto userRequest) {
+        var userResponseDto = new CreateResponseDto();
         Optional<UsersEntity> user = usersRepository.findByEmail((userRequest.getEmail()));
         if (user.isPresent()) {
-            throw new UsersModelException("Error al crear el usuario. El campo email ya se encuentra registrado.", HttpStatus.SC_CONFLICT);
+            throw new UsersModelException(ErrorCode.EMAIL_ALREADY_REGISTERED.getDescription(),
+                    ErrorCode.EMAIL_INVALID_FORMAT.getCode(), LocalDateTime.now());
         } else {
             var usersEntity = usersRepository.save(UsersEntityConverter.toDB(userRequest));
             userResponseDto = UsersEntityConverter.toDomain(usersEntity);

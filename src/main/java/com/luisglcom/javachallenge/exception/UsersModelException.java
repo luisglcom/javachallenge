@@ -1,5 +1,7 @@
 package com.luisglcom.javachallenge.exception;
 
+import java.time.LocalDateTime;
+
 /**
  * The type Users model exception.
  */
@@ -10,11 +12,11 @@ public class UsersModelException extends UsersException {
     /**
      * Instantiates a new Users model exception.
      *
-     * @param message    the message
-     * @param httpStatus the http status
+     * @param message   the message
+     * @param errorCode the error code
      */
-    public UsersModelException (String message, Integer httpStatus) {
-        super(message, String.valueOf(httpStatus));
+    public UsersModelException (String message, Integer errorCode, LocalDateTime timestamp) {
+        super(message, errorCode, timestamp);
     }
 
 }

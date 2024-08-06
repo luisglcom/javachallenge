@@ -1,7 +1,7 @@
 package com.luisglcom.javachallenge.service;
 
-import com.luisglcom.javachallenge.dto.UserRequestDto;
-import com.luisglcom.javachallenge.dto.UserResponseDto;
+import com.luisglcom.javachallenge.dto.CreateRequestDto;
+import com.luisglcom.javachallenge.dto.CreateResponseDto;
 
 /**
  * The interface Users service.
@@ -14,5 +14,5 @@ public interface UsersService {
      * @param userRequest the user request
      * @return the user response dto
      */
-    UserResponseDto createUser(UserRequestDto userRequest);
+    CreateResponseDto createUser(CreateRequestDto userRequest);
 }

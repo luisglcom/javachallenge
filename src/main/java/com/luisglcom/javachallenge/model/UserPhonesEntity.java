@@ -27,9 +27,9 @@ public class UserPhonesEntity {
     @JoinColumn(name = "USER_ID")
     private UsersEntity user;
     @Column
-    private String number;
+    private Long number;
     @Column
     private Integer cityCode;
     @Column
-    private Integer countryCode;
+    private String countryCode;
 }
