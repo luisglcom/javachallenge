@@ -1,7 +1,7 @@
 package com.luisglcom.javachallenge.model.converter;
 
-import com.luisglcom.javachallenge.dto.UserRequestDto;
-import com.luisglcom.javachallenge.dto.UserResponseDto;
+import com.luisglcom.javachallenge.dto.CreateRequestDto;
+import com.luisglcom.javachallenge.dto.CreateResponseDto;
 import com.luisglcom.javachallenge.model.UsersEntity;
 import lombok.experimental.UtilityClass;
 
@@ -24,8 +24,8 @@ public class UsersEntityConverter {
      * @param usersEntity the users entity
      * @return the user response dto
      */
-    public static UserResponseDto toDomain(UsersEntity usersEntity) {
-        return UserResponseDto.builder()
+    public static CreateResponseDto toDomain(UsersEntity usersEntity) {
+        return CreateResponseDto.builder()
                 .id(usersEntity.getId())
                 .created(usersEntity.getCreated() == null ? null : LocalDateTime
                         .ofInstant(usersEntity.getCreated().toInstant(), ZoneId.systemDefault()))
@@ -41,16 +41,16 @@ public class UsersEntityConverter {
     /**
      * To db users entity.
      *
-     * @param userRequestDto the user request dto
+     * @param createRequestDto the user request dto
      * @return the users entity
      */
-    public static UsersEntity toDB(UserRequestDto userRequestDto) {
+    public static UsersEntity toDB(CreateRequestDto createRequestDto) {
 
         var userEntity = new UsersEntity();
-        userEntity.setName(userRequestDto.getName());
-        userEntity.setEmail(userRequestDto.getEmail());
-        userEntity.setPassword(userRequestDto.getPassword());
-        userEntity.setPhones(UserPhonesEntityConverter.listToDB(userRequestDto.getPhones()).stream().map(i -> {
+        userEntity.setName(createRequestDto.getName());
+        userEntity.setEmail(createRequestDto.getEmail());
+        userEntity.setPassword(createRequestDto.getPassword());
+        userEntity.setPhones(UserPhonesEntityConverter.listToDB(createRequestDto.getPhones()).stream().map(i -> {
                     i.setUser(userEntity);
                     return i;
                 }).collect(Collectors.toList()));

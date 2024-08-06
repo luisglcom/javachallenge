@@ -3,7 +3,7 @@ info:
   title: User API
   version: 1.0.0
 paths:
-  /users:
+  /sign-up:
     post:
       summary: Create a new user
       operationId: createUser
@@ -12,7 +12,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserRequest'
+              $ref: '#/components/schemas/CreateRequest'
         required: true
       responses:
         201:
@@ -20,7 +20,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserResponse'
+                $ref: '#/components/schemas/CreateResponse'
         400:
           description: Bad request
           content:
@@ -36,7 +36,7 @@ paths:
       x-codegen-request-body-name: body
 components:
   schemas:
-    UserRequest:
+    CreateRequest:
       type: object
       properties:
         name:
@@ -55,7 +55,7 @@ components:
           items:
             $ref: "#/components/schemas/Phone"
           description: List of user phone numbers
-    UserResponse:
+    CreateResponse:
       type: object
       properties:
         id:
@@ -84,19 +84,31 @@ components:
       properties:
         number:
           description: Phone number
-          type: string
+          type: integer
+          format: int64
         citycode:
           description: Country code
           type: integer
           format: int32
         countrycode:
           description: City code
-          type: integer
-          format: int32
+          type: string
     ErrorResponse:
       type: object
       properties:
-        mensaje:
-          description: Error description
-          type: string
-
+        error:
+          type: array
+          items:
+            type: object
+            properties:
+              timestamp:
+                type: string
+                format: date-time
+                description: Timestamp
+              codigo:
+                description: Codigo de error
+                type: integer
+                format: int32
+              detail:
+                description: Detalle del error
+                type: string

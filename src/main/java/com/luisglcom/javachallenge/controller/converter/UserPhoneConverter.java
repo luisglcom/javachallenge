@@ -1,15 +1,11 @@
 package com.luisglcom.javachallenge.controller.converter;
 
 import com.luisglcom.javachallenge.dto.UserPhoneDto;
-import com.luisglcom.javachallenge.exception.UsersModelException;
 import com.luisglcom.javachallenge.openapi.model.Phone;
-import com.luisglcom.javachallenge.openapi.model.UserRequest;
 import lombok.experimental.UtilityClass;
-import org.apache.http.HttpStatus;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * The type User phone converter.
@@ -68,22 +64,8 @@ public class UserPhoneConverter {
     public static List<UserPhoneDto> listToDomain(List<Phone> phones) {
         List<UserPhoneDto> userPhones = new ArrayList<>();
         for (Phone phone : phones) {
-            validatePhoneRequest(phone);
             userPhones.add(toDomain(phone));
         }
         return userPhones;
-    }
-
-    private static void validatePhoneRequest(Phone phone) {
-
-        if (Objects.isNull(phone.getNumber()) || phone.getNumber().toString().isEmpty()) {
-            throw new UsersModelException("Error al crear el usuario. El campo number de phone es requerido.", HttpStatus.SC_BAD_REQUEST);
-        }
-        if (Objects.isNull(phone.getCitycode())) {
-            throw new UsersModelException("Error al crear el usuario. El campo citycode de phone es requerido.", HttpStatus.SC_BAD_REQUEST);
-        }
-        if (Objects.isNull(phone.getCountrycode())) {
-            throw new UsersModelException("Error al crear el usuario. El campo countrycode de phone es requerido.", HttpStatus.SC_BAD_REQUEST);
-        }
     }
 }

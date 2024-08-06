@@ -1,10 +1,10 @@
 package com.luisglcom.javachallenge.controller;
 
-import com.luisglcom.javachallenge.controller.converter.UserRequestConverter;
-import com.luisglcom.javachallenge.controller.converter.UserResponseConverter;
-import com.luisglcom.javachallenge.openapi.api.UsersApi;
-import com.luisglcom.javachallenge.openapi.model.UserRequest;
-import com.luisglcom.javachallenge.openapi.model.UserResponse;
+import com.luisglcom.javachallenge.controller.converter.CreateRequestConverter;
+import com.luisglcom.javachallenge.controller.converter.CreateResponseConverter;
+import com.luisglcom.javachallenge.openapi.api.SignUpApi;
+import com.luisglcom.javachallenge.openapi.model.CreateRequest;
+import com.luisglcom.javachallenge.openapi.model.CreateResponse;
 import com.luisglcom.javachallenge.service.UsersService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,13 +16,13 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @AllArgsConstructor
 @RestController
-public class UsersController implements UsersApi {
+public class UsersController implements SignUpApi {
 
     private final UsersService usersService;
     @Override
-    public ResponseEntity<UserResponse> createUser(UserRequest body) {
+    public ResponseEntity<CreateResponse> createUser(CreateRequest body) {
         return ResponseEntity.status(HttpStatus.OK)
-                .body(UserResponseConverter.toResponse(usersService
-                        .createUser(UserRequestConverter.toDomain(body))));
+                .body(CreateResponseConverter.toResponse(usersService
+                        .createUser(CreateRequestConverter.toDomain(body))));
     }
 }
